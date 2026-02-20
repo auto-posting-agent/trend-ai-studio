@@ -2,23 +2,30 @@
 
 AI/Stock 트렌드 자동 분석 및 Threads 자동 게시 시스템
 
-## Overview
+## 개요
 
 RSS, 웹사이트에서 AI/주식 관련 트렌드를 자동으로 수집하고, LLM으로 분석/요약하여 Threads에 자동 게시하는 시스템
 
-## Tech Stack
+## 문서
 
-| Layer | Technology |
-|-------|------------|
+- [설치 가이드](docs/SETUP.md)
+- [기능 명세](docs/FEATURE_SPEC.md)
+- [개발 명세](docs/DEV_SPEC.md)
+- [역할 분담 가이드](docs/ROLE_GUIDE.md)
+
+## 기술 스택
+
+| 구분 | 기술 |
+|------|------|
 | Backend | FastAPI, SQLModel, Alembic |
 | Frontend | Next.js 15, TypeScript, Tailwind CSS |
 | Database | PostgreSQL (Supabase Local), pgvector |
-| Agent | LangGraph, OpenAI |
+| Agent | LangGraph, Gemini |
 | Search | Tavily |
 | Scraping | Playwright, feedparser |
 | Deploy | Docker |
 
-## Project Structure
+## 프로젝트 구조
 
 ```
 trend-ai-studio/
@@ -34,58 +41,45 @@ trend-ai-studio/
 │   └── tests/
 ├── frontend/             # Next.js 프론트엔드
 │   └── src/
+├── docs/                 # 문서
 ├── supabase/             # Supabase 로컬 설정
 └── docker-compose.yml
 ```
 
-## Quick Start
-
-### 1. Supabase Local 시작
+## 빠른 시작
 
 ```bash
+# 1. Supabase 로컬 시작
 supabase start
-```
 
-### 2. Backend
-
-```bash
+# 2. Backend
 cd backend
-python -m venv venv
-source venv/bin/activate
+python -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env
-# .env에 API 키 설정
+cp .env.example .env  # API 키 설정
 alembic upgrade head
 uvicorn app.main:app --reload
-```
 
-### 3. Frontend
-
-```bash
+# 3. Frontend
 cd frontend
 npm install
 cp .env.example .env.local
 npm run dev
 ```
 
-### 4. Docker (전체)
+자세한 설치 방법은 [설치 가이드](docs/SETUP.md) 참조
 
-```bash
-cp .env.example .env
-docker-compose up -d
+## 브랜치 전략
+
+- `main` - 프로덕션
+- `dev` - 개발 통합
+- `feature/*` - 기능 브랜치
+
+## 워크플로우
+
 ```
-
-## Git Branch Strategy
-
-- `main` - Production
-- `dev` - Development
-- `feature/*` - Feature branches
-
-## API Documentation
-
-Backend 실행 후: http://localhost:8000/docs
-
-## Workflow
+[소스] -> [크롤러] -> [벡터 DB] -> [에이전트] -> [검토] -> [게시] -> [Threads]
+```
 
 1. **Crawler**: RSS/웹사이트에서 콘텐츠 수집 (1-5분 주기)
 2. **Vector DB**: 중복 체크 및 임베딩 저장
@@ -94,14 +88,6 @@ Backend 실행 후: http://localhost:8000/docs
 5. **Publish**: Threads API로 게시
 6. **Notify**: Discord/Telegram 알림
 
-## Data Schema
+## API 문서
 
-| Field | Type | Description |
-|-------|------|-------------|
-| source_id | UUID | 출처 식별자 |
-| title | String | 제목 |
-| content | Text | 원문 |
-| source_url | String | 원문 링크 |
-| published_at | DateTime | 게시 시간 |
-| category_hint | Enum | llm, hardware, stock, crypto 등 |
-| thread_status | Enum | pending, analyzing, ready, published |
+Backend 실행 후: http://localhost:8000/docs

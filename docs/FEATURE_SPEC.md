@@ -1,99 +1,99 @@
-# Feature Specification
+# 기능 명세
 
-> Last Updated: 2026-02-21
+> 최종 수정: 2026-02-21
 
-## Overview
+## 개요
 
 AI/Stock 트렌드를 자동으로 수집, 분석, 생성하여 Threads에 자동 게시하는 시스템
 
-## Target Topics
+## 타겟 토픽
 
-| Category | Sources |
+| 카테고리 | 소스 |
 |----------|---------|
 | AI/LLM | OpenAI, Anthropic, Google AI 블로그, arXiv, Hacker News |
-| Hardware | NVIDIA, AMD, Apple 뉴스 |
-| Startup | TechCrunch, The Verge, ProductHunt |
-| Stock | Bloomberg, Reuters, 증권사 리포트 |
-| Crypto | CoinDesk, The Block |
+| 하드웨어 | NVIDIA, AMD, Apple 뉴스 |
+| 스타트업 | TechCrunch, The Verge, ProductHunt |
+| 주식 | Bloomberg, Reuters, 증권사 리포트 |
+| 크립토 | CoinDesk, The Block |
 
-## Core Features
+## 핵심 기능
 
-### 1. Content Crawler
+### 1. 콘텐츠 크롤러
 
-자동으로 다양한 소스에서 콘텐츠 수집
+다양한 소스에서 콘텐츠 자동 수집
 
-| Feature | Description |
+| 기능 | 설명 |
 |---------|-------------|
-| RSS Crawler | RSS 피드 파싱 (feedparser) |
-| Web Scraper | 동적 웹사이트 크롤링 (Playwright) |
-| Scheduling | 1-5분 주기 자동 크롤링 (APScheduler) |
-| Deduplication | URL 기반 중복 방지 |
-| Cookie Auth | 봇 탐지 우회를 위한 쿠키 인증 |
+| RSS 크롤러 | RSS 피드 파싱 (feedparser) |
+| 웹 스크래퍼 | 동적 웹사이트 크롤링 (Playwright) |
+| 스케줄링 | 1-5분 주기 자동 크롤링 (APScheduler) |
+| 중복 제거 | URL 기반 중복 방지 |
+| 쿠키 인증 | 봇 탐지 우회를 위한 쿠키 인증 |
 
-### 2. Vector Search & Context
+### 2. 벡터 검색 및 컨텍스트
 
 과거 포스팅과의 중복 방지 및 맥락 검색
 
-| Feature | Description |
+| 기능 | 설명 |
 |---------|-------------|
-| Embedding | Gemini text-embedding-004 |
-| Vector DB | Supabase pgvector |
-| Similarity Search | 유사 콘텐츠 검색 (threshold: 0.7) |
-| Dedup Check | 이미 게시한 내용 중복 체크 |
+| 임베딩 | Gemini text-embedding-004 |
+| 벡터 DB | Supabase pgvector |
+| 유사도 검색 | 유사 콘텐츠 검색 (threshold: 0.7) |
+| 중복 체크 | 이미 게시한 내용 중복 체크 |
 
-### 3. AI Agent Workflow
+### 3. AI 에이전트 워크플로우
 
 LangGraph 기반 콘텐츠 분석 및 생성 파이프라인
 
-| Node | Description |
+| 노드 | 설명 |
 |------|-------------|
 | Search | Tavily로 추가 컨텍스트 검색 |
 | Analyze | 트렌드 분석, 중요도 판단 |
 | Generate | 페르소나 기반 콘텐츠 생성 |
 | Image | 이미지 캡처/가공 (선택적) |
 
-### 4. Threads Publisher
+### 4. Threads 게시
 
 Meta Threads API를 통한 자동 게시
 
-| Feature | Description |
+| 기능 | 설명 |
 |---------|-------------|
-| Text Post | 텍스트 게시 (auto_publish_text) |
-| Image Post | 이미지 첨부 게시 |
-| Scheduling | 예약 게시 |
-| Analytics | 게시물 성과 조회 |
+| 텍스트 게시 | 텍스트 게시 (auto_publish_text) |
+| 이미지 게시 | 이미지 첨부 게시 |
+| 예약 게시 | 예약 게시 |
+| 분석 | 게시물 성과 조회 |
 
-### 5. Dashboard (Frontend)
+### 5. 대시보드 (프론트엔드)
 
 관리 및 모니터링 대시보드
 
-| Feature | Description |
+| 기능 | 설명 |
 |---------|-------------|
-| Source Management | 크롤링 소스 추가/삭제/수정 |
-| Content Review | 생성된 콘텐츠 검토/수정 |
-| Manual Publish | 수동 게시 승인 |
-| Statistics | 크롤링/게시 통계 |
-| Scheduler Control | 스케줄러 시작/중지 |
+| 소스 관리 | 크롤링 소스 추가/삭제/수정 |
+| 콘텐츠 검토 | 생성된 콘텐츠 검토/수정 |
+| 수동 게시 | 수동 게시 승인 |
+| 통계 | 크롤링/게시 통계 |
+| 스케줄러 제어 | 스케줄러 시작/중지 |
 
-### 6. Notification
+### 6. 알림
 
 게시 완료/에러 알림
 
-| Channel | Description |
+| 채널 | 설명 |
 |---------|-------------|
 | Discord | Webhook으로 알림 전송 |
 | Telegram | Bot API로 알림 전송 |
 
-## Data Flow
+## 데이터 흐름
 
 ```
-[Sources] -> [Crawler] -> [Vector DB] -> [Agent] -> [Review] -> [Publisher] -> [Threads]
-                              |              |           |
-                              v              v           v
-                         [Dedup Check]  [Generate]  [Notification]
+[소스] -> [크롤러] -> [벡터 DB] -> [에이전트] -> [검토] -> [게시] -> [Threads]
+                          |            |           |
+                          v            v           v
+                     [중복 체크]    [생성]      [알림]
 ```
 
-## Thread Status Lifecycle
+## Thread 상태 라이프사이클
 
 ```
 PENDING -> ANALYZING -> READY -> SCHEDULED -> PUBLISHED
@@ -102,7 +102,7 @@ PENDING -> ANALYZING -> READY -> SCHEDULED -> PUBLISHED
                        FAILED
 ```
 
-| Status | Description |
+| 상태 | 설명 |
 |--------|-------------|
 | PENDING | 크롤링 직후, 미처리 상태 |
 | ANALYZING | AI 에이전트 처리 중 |
@@ -111,7 +111,7 @@ PENDING -> ANALYZING -> READY -> SCHEDULED -> PUBLISHED
 | PUBLISHED | 게시 완료 |
 | FAILED | 처리/게시 실패 |
 
-## Persona (Content Style)
+## 페르소나 (콘텐츠 스타일)
 
 choi.openai 스타일 참고:
 - 짧고 임팩트 있는 문장
@@ -122,9 +122,9 @@ choi.openai 스타일 참고:
 
 ## Rate Limits
 
-| Service | Limit |
+| 서비스 | 제한 |
 |---------|-------|
-| Threads API Search | 500 queries / 7 days |
-| Threads API Embedding | 5M requests / 24h |
-| Tavily | Plan별 상이 |
-| Gemini | 60 RPM (Free tier) |
+| Threads API 검색 | 500 쿼리 / 7일 |
+| Threads API 임베딩 | 5M 요청 / 24시간 |
+| Tavily | 플랜별 상이 |
+| Gemini | 60 RPM (무료 티어) |

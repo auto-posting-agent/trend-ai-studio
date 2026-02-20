@@ -1,17 +1,17 @@
-# Setup Guide
+# 설치 가이드
 
-> Last Updated: 2026-02-21
+> 최종 수정: 2026-02-21
 
-## Prerequisites
+## 필수 조건
 
 - Python 3.12+
 - Node.js 20+
 - Docker & Docker Compose
 - Supabase CLI
 
-## 1. Supabase Local Setup
+## 1. Supabase 로컬 설정
 
-### 1.1 Install Supabase CLI
+### 1.1 Supabase CLI 설치
 
 ```bash
 # macOS
@@ -21,7 +21,7 @@ brew install supabase/tap/supabase
 npm install -g supabase
 ```
 
-### 1.2 Start Local Supabase
+### 1.2 로컬 Supabase 시작
 
 ```bash
 # 프로젝트 루트에서
@@ -34,7 +34,7 @@ supabase start
 - Studio URL: `http://localhost:54323`
 - anon key: 출력된 값 복사
 
-### 1.3 pgvector Extension 활성화
+### 1.3 pgvector 확장 활성화
 
 Supabase Studio (`http://localhost:54323`) 접속 후 SQL Editor에서:
 
@@ -42,9 +42,9 @@ Supabase Studio (`http://localhost:54323`) 접속 후 SQL Editor에서:
 CREATE EXTENSION IF NOT EXISTS vector;
 ```
 
-## 2. Backend Setup
+## 2. 백엔드 설정
 
-### 2.1 Python Virtual Environment
+### 2.1 Python 가상환경
 
 ```bash
 cd backend
@@ -57,19 +57,19 @@ source venv/bin/activate
 venv\Scripts\activate
 ```
 
-### 2.2 Install Dependencies
+### 2.2 의존성 설치
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2.3 Playwright Browser
+### 2.3 Playwright 브라우저 설치
 
 ```bash
 playwright install chromium
 ```
 
-### 2.4 Environment Variables
+### 2.4 환경 변수 설정
 
 ```bash
 cp .env.example .env
@@ -80,12 +80,12 @@ cp .env.example .env
 DATABASE_URL=postgresql+asyncpg://postgres:postgres@localhost:54322/postgres
 SUPABASE_URL=http://localhost:54321
 SUPABASE_ANON_KEY=<supabase start 출력값>
-GEMINI_API_KEY=<your-gemini-api-key>
-TAVILY_API_KEY=<your-tavily-api-key>
-THREADS_ACCESS_TOKEN=<your-threads-token>
+GEMINI_API_KEY=<발급받은 키>
+TAVILY_API_KEY=<발급받은 키>
+THREADS_ACCESS_TOKEN=<발급받은 토큰>
 ```
 
-### 2.5 Database Migration
+### 2.5 데이터베이스 마이그레이션
 
 ```bash
 # 마이그레이션 생성
@@ -95,7 +95,7 @@ alembic revision --autogenerate -m "initial"
 alembic upgrade head
 ```
 
-### 2.6 Run Server
+### 2.6 서버 실행
 
 ```bash
 uvicorn app.main:app --reload --port 8000
@@ -103,22 +103,22 @@ uvicorn app.main:app --reload --port 8000
 
 API 문서: `http://localhost:8000/docs`
 
-## 3. Frontend Setup
+## 3. 프론트엔드 설정
 
-### 3.1 Install Dependencies
+### 3.1 의존성 설치
 
 ```bash
 cd frontend
 npm install
 ```
 
-### 3.2 Environment Variables
+### 3.2 환경 변수 설정
 
 ```bash
 cp .env.example .env.local
 ```
 
-### 3.3 Run Development Server
+### 3.3 개발 서버 실행
 
 ```bash
 npm run dev
@@ -126,7 +126,7 @@ npm run dev
 
 `http://localhost:3000` 에서 확인
 
-## 4. Docker Setup (Optional)
+## 4. Docker 설정 (선택)
 
 전체 스택을 Docker로 실행:
 
@@ -141,7 +141,7 @@ docker-compose up backend -d
 docker-compose up frontend -d
 ```
 
-## 5. API Keys 발급
+## 5. API 키 발급
 
 ### Gemini API
 1. https://aistudio.google.com/apikey 접속
@@ -156,7 +156,7 @@ docker-compose up frontend -d
 2. 앱 생성 -> Threads API 추가
 3. Access Token 발급
 
-## Troubleshooting
+## 문제 해결
 
 ### Supabase 연결 실패
 ```bash
@@ -164,7 +164,7 @@ supabase stop
 supabase start
 ```
 
-### Alembic Migration 충돌
+### Alembic 마이그레이션 충돌
 ```bash
 # 모든 마이그레이션 삭제 후 재생성
 rm -rf alembic/versions/*
@@ -172,7 +172,7 @@ alembic revision --autogenerate -m "initial"
 alembic upgrade head
 ```
 
-### Port 충돌
+### 포트 충돌
 ```bash
 # 사용 중인 포트 확인
 lsof -i :8000

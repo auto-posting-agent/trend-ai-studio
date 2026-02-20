@@ -1,0 +1,89 @@
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.venv/
+venv/
+ENV/
+
+# Node
+node_modules/
+.npm
+.pnpm-store/
+
+# Next.js
+.next/
+out/
+.swc/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# Docker
+*.pem
+
+# Supabase Local
+.supabase/
+
+# Alembic
+alembic/versions/*.pyc
+
+# Playwright
+playwright-report/
+playwright/.cache/
+test-results/
+
+# Redis
+dump.rdb
+
+# Python Linters/Type Checkers
+.ruff_cache/
+.mypy_cache/
+
+# Backend/Frontend specific env
+backend/.env
+frontend/.env.local
+
+# Misc
+*.bak
+*.tmp

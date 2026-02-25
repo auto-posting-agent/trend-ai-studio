@@ -1,0 +1,46 @@
+{
+  "total_sources_configured": 47,
+  "total_sources_run": 30,
+  "sources_ok": 30,
+  "sources_failed": 0,
+  "sampled_count": 3,
+  "skipped": [],
+  "samples": [
+    {
+      "source_catalog_id": "openai_news_rss",
+      "source_name": "OpenAI News (RSS)",
+      "source_kind": "rss",
+      "source_feed_url": "https://openai.com/news/rss.xml",
+      "url": "https://openai.com/index/arvind-kc-chief-people-officer",
+      "title": "Arvind KC appointed Chief People Officer",
+      "published_at": "2026-02-24T13:40:00",
+      "published_raw": "Tue, 24 Feb 2026 13:40:00 GMT"
+    },
+    {
+      "source_catalog_id": "openai_dev_changelog_rss",
+      "source_name": "OpenAI Developer Changelog (RSS)",
+      "source_kind": "rss",
+      "source_feed_url": "https://developers.openai.com/changelog/rss.xml",
+      "url": "https://developers.openai.com/changelog/",
+      "title": "Codex CLI Release: 0.104.0",
+      "published_at": "2026-02-18T00:00:00",
+      "published_raw": "Wed, 18 Feb 2026 00:00:00 GMT"
+    },
+    {
+      "source_catalog_id": "anthropic_news_index",
+      "source_name": "Anthropic Newsroom (index)",
+      "source_kind": "html_index",
+      "source_feed_url": "https://www.anthropic.com/news",
+      "url": "https://www.anthropic.com/news/claude-sonnet-4-6",
+      "title": "Introducing Claude Sonnet 4.6 Product Feb 17, 2026 Sonnet 4.6 delivers frontier performance across coding, agents, and professional work at scale.",
+      "published_at": null,
+      "published_raw": null
+    }
+  ],
+  "db_result": {
+    "inserted": 0,
+    "updated": 3,
+    "failed": 0,
+    "errors": []
+  }
+}

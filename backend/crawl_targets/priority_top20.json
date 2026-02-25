@@ -1,0 +1,232 @@
+{
+  "requested_limit": 20,
+  "selected_count": 20,
+  "selected": [
+    {
+      "url": "https://blogs.nvidia.com/blog/ai-in-healthcare-survey-2026/",
+      "title": "From Radiology to Drug Discovery, Survey Reveals AI Is Delivering Clear Return on Investment in Healthcare",
+      "published_at": "2026-02-24T14:00:34",
+      "published_raw": "Tue, 24 Feb 2026 14:00:34 GMT",
+      "source_catalog_id": "nvidia_news_releases_rss",
+      "source_name": "NVIDIA Newsroom Releases (RSS)",
+      "source_kind": "rss",
+      "source_feed_url": "https://nvidianews.nvidia.com/releases.xml",
+      "tier": 1
+    },
+    {
+      "url": "https://openai.com/index/arvind-kc-chief-people-officer",
+      "title": "Arvind KC appointed Chief People Officer",
+      "published_at": "2026-02-24T13:40:00",
+      "published_raw": "Tue, 24 Feb 2026 13:40:00 GMT",
+      "source_catalog_id": "openai_news_rss",
+      "source_name": "OpenAI News (RSS)",
+      "source_kind": "rss",
+      "source_feed_url": "https://openai.com/news/rss.xml",
+      "tier": 1
+    },
+    {
+      "url": "https://huggingface.co/blog/nvidia/cosmos-on-jetson",
+      "title": "Deploying Open Source Vision Language Models (VLM) on Jetson",
+      "published_at": "2026-02-24T00:00:21",
+      "published_raw": "Tue, 24 Feb 2026 00:00:21 GMT",
+      "source_catalog_id": "huggingface_blog_rss",
+      "source_name": "Hugging Face Blog (RSS)",
+      "source_kind": "rss",
+      "source_feed_url": "https://huggingface.co/blog/feed.xml",
+      "tier": 1
+    },
+    {
+      "url": "https://developer.nvidia.com/blog/using-nvfp4-low-precision-model-training-for-higher-throughput-without-losing-accuracy/",
+      "title": "Using NVFP4 Low-Precision Model Training for Higher Throughput Without Losing Accuracy",
+      "published_at": "2026-02-23T18:00:00",
+      "published_raw": "2026-02-23T18:00:00Z",
+      "source_catalog_id": "nvidia_technical_blog_atom",
+      "source_name": "NVIDIA Technical Blog (Atom)",
+      "source_kind": "atom",
+      "source_feed_url": "https://developer.nvidia.com/blog/feed/",
+      "tier": 1
+    },
+    {
+      "url": "https://blogs.nvidia.com/blog/ai-cybersecurity-operational-technology-industrial-control-systems/",
+      "title": "NVIDIA Brings AI-Powered Cybersecurity to World’s Critical Infrastructure",
+      "published_at": "2026-02-23T16:00:57",
+      "published_raw": "Mon, 23 Feb 2026 16:00:57 GMT",
+      "source_catalog_id": "nvidia_news_releases_rss",
+      "source_name": "NVIDIA Newsroom Releases (RSS)",
+      "source_kind": "rss",
+      "source_feed_url": "https://nvidianews.nvidia.com/releases.xml",
+      "tier": 1
+    },
+    {
+      "url": "https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified",
+      "title": "Why we no longer evaluate SWE-bench Verified",
+      "published_at": "2026-02-23T11:00:00",
+      "published_raw": "Mon, 23 Feb 2026 11:00:00 GMT",
+      "source_catalog_id": "openai_news_rss",
+      "source_name": "OpenAI News (RSS)",
+      "source_kind": "rss",
+      "source_feed_url": "https://openai.com/news/rss.xml",
+      "tier": 1
+    },
+    {
+      "url": "https://openai.com/index/frontier-alliance-partners",
+      "title": "OpenAI announces Frontier Alliance Partners",
+      "published_at": "2026-02-23T05:30:00",
+      "published_raw": "Mon, 23 Feb 2026 05:30:00 GMT",
+      "source_catalog_id": "openai_news_rss",
+      "source_name": "OpenAI News (RSS)",
+      "source_kind": "rss",
+      "source_feed_url": "https://openai.com/news/rss.xml",
+      "tier": 1
+    },
+    {
+      "url": "https://ollama.com/blog/openclaw-tutorial",
+      "title": "The simplest and fastest way to setup OpenClaw",
+      "published_at": "2026-02-23T00:00:00",
+      "published_raw": "Mon, 23 Feb 2026 00:00:00 +0000",
+      "source_catalog_id": "ollama_blog_rss",
+      "source_name": "Ollama Blog (RSS)",
+      "source_kind": "rss",
+      "source_feed_url": "https://ollama.com/blog/rss.xml",
+      "tier": 1
+    },
+    {
+      "url": "https://openai.com/index/first-proof-submissions",
+      "title": "Our First Proof submissions",
+      "published_at": "2026-02-20T14:30:00",
+      "published_raw": "Fri, 20 Feb 2026 14:30:00 GMT",
+      "source_catalog_id": "openai_news_rss",
+      "source_name": "OpenAI News (RSS)",
+      "source_kind": "rss",
+      "source_feed_url": "https://openai.com/news/rss.xml",
+      "tier": 1
+    },
+    {
+      "url": "https://huggingface.co/blog/ggml-joins-hf",
+      "title": "GGML and llama.cpp join HF to ensure the long-term progress of Local AI",
+      "published_at": "2026-02-20T00:00:00",
+      "published_raw": "Fri, 20 Feb 2026 00:00:00 GMT",
+      "source_catalog_id": "huggingface_blog_rss",
+      "source_name": "Hugging Face Blog (RSS)",
+      "source_kind": "rss",
+      "source_feed_url": "https://huggingface.co/blog/feed.xml",
+      "tier": 1
+    },
+    {
+      "url": "https://huggingface.co/blog/unsloth-jobs",
+      "title": "Train AI models with Unsloth and Hugging Face Jobs for FREE",
+      "published_at": "2026-02-20T00:00:00",
+      "published_raw": "Fri, 20 Feb 2026 00:00:00 GMT",
+      "source_catalog_id": "huggingface_blog_rss",
+      "source_name": "Hugging Face Blog (RSS)",
+      "source_kind": "rss",
+      "source_feed_url": "https://huggingface.co/blog/feed.xml",
+      "tier": 1
+    },
+    {
+      "url": "https://developer.nvidia.com/blog/accelerating-data-processing-with-nvidia-multi-instance-gpu-and-numa-node-localization/",
+      "title": "Accelerating Data Processing with NVIDIA Multi-Instance GPU and NUMA Node Localization",
+      "published_at": "2026-02-19T17:30:00",
+      "published_raw": "2026-02-19T17:30:00Z",
+      "source_catalog_id": "nvidia_technical_blog_atom",
+      "source_name": "NVIDIA Technical Blog (Atom)",
+      "source_kind": "atom",
+      "source_feed_url": "https://developer.nvidia.com/blog/feed/",
+      "tier": 1
+    },
+    {
+      "url": "https://deepmind.google/blog/gemini-3-1-pro-a-smarter-model-for-your-most-complex-tasks/",
+      "title": "Gemini 3.1 Pro: A smarter model for your most complex tasks",
+      "published_at": "2026-02-19T16:06:14",
+      "published_raw": "Thu, 19 Feb 2026 16:06:14 +0000",
+      "source_catalog_id": "deepmind_news_rss",
+      "source_name": "Google DeepMind News (RSS)",
+      "source_kind": "rss",
+      "source_feed_url": "https://deepmind.google/blog/rss.xml",
+      "tier": 1
+    },
+    {
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-pro/",
+      "title": "Gemini 3.1 Pro: A smarter model for your most complex tasks",
+      "published_at": "2026-02-19T16:00:00",
+      "published_raw": "Thu, 19 Feb 2026 16:00:00 +0000",
+      "source_catalog_id": "google_models_research_rss",
+      "source_name": "Google Blog - Models & Research (RSS)",
+      "source_kind": "rss",
+      "source_feed_url": "https://blog.google/innovation-and-ai/models-and-research/rss/",
+      "tier": 1
+    },
+    {
+      "url": "https://blogs.nvidia.com/blog/ai-in-telco-survey-2026/",
+      "title": "Survey Reveals AI Advances in Telecom: Networks and Automation in Driver’s Seat as Return on Investment Climbs",
+      "published_at": "2026-02-19T14:00:45",
+      "published_raw": "Thu, 19 Feb 2026 14:00:45 GMT",
+      "source_catalog_id": "nvidia_news_releases_rss",
+      "source_name": "NVIDIA Newsroom Releases (RSS)",
+      "source_kind": "rss",
+      "source_feed_url": "https://nvidianews.nvidia.com/releases.xml",
+      "tier": 1
+    },
+    {
+      "url": "https://blogs.nvidia.com/blog/geforce-now-thursday-battlefield-season-2/",
+      "title": "All About the Games: Play Over 4,500 Titles With GeForce NOW",
+      "published_at": "2026-02-19T14:00:35",
+      "published_raw": "Thu, 19 Feb 2026 14:00:35 GMT",
+      "source_catalog_id": "nvidia_news_releases_rss",
+      "source_name": "NVIDIA Newsroom Releases (RSS)",
+      "source_kind": "rss",
+      "source_feed_url": "https://nvidianews.nvidia.com/releases.xml",
+      "tier": 1
+    },
+    {
+      "url": "https://openai.com/index/advancing-independent-research-ai-alignment",
+      "title": "Advancing independent research on AI alignment",
+      "published_at": "2026-02-19T10:00:00",
+      "published_raw": "Thu, 19 Feb 2026 10:00:00 GMT",
+      "source_catalog_id": "openai_news_rss",
+      "source_name": "OpenAI News (RSS)",
+      "source_kind": "rss",
+      "source_feed_url": "https://openai.com/news/rss.xml",
+      "tier": 1
+    },
+    {
+      "url": "https://blog.google/innovation-and-ai/technology/ai/ai-impact-summit-2026-collection/",
+      "title": "AI Impact Summit 2026",
+      "published_at": "2026-02-19T04:30:00",
+      "published_raw": "Thu, 19 Feb 2026 04:30:00 +0000",
+      "source_catalog_id": "google_ai_category_rss",
+      "source_name": "Google Blog - AI category (RSS)",
+      "source_kind": "rss",
+      "source_feed_url": "https://blog.google/innovation-and-ai/technology/ai/rss/",
+      "tier": 1
+    },
+    {
+      "url": "https://openai.com/index/openai-for-india",
+      "title": "Introducing OpenAI for India",
+      "published_at": "2026-02-18T21:00:00",
+      "published_raw": "Wed, 18 Feb 2026 21:00:00 GMT",
+      "source_catalog_id": "openai_news_rss",
+      "source_name": "OpenAI News (RSS)",
+      "source_kind": "rss",
+      "source_feed_url": "https://openai.com/news/rss.xml",
+      "tier": 1
+    },
+    {
+      "url": "https://developer.nvidia.com/blog/unlock-massive-token-throughput-with-gpu-fractioning-in-nvidia-runai/",
+      "title": "Unlock Massive Token Throughput with GPU Fractioning in NVIDIA Run:ai",
+      "published_at": "2026-02-18T18:00:00",
+      "published_raw": "2026-02-18T18:00:00Z",
+      "source_catalog_id": "nvidia_technical_blog_atom",
+      "source_name": "NVIDIA Technical Blog (Atom)",
+      "source_kind": "atom",
+      "source_feed_url": "https://developer.nvidia.com/blog/feed/",
+      "tier": 1
+    }
+  ],
+  "db_result": {
+    "inserted": 19,
+    "updated": 1,
+    "failed": 0,
+    "errors": []
+  }
+}

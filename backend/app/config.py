@@ -6,6 +6,7 @@ class Settings(BaseSettings):
     # App
     APP_NAME: str = "Trend AI Studio"
     DEBUG: bool = False
+    SQL_ECHO: bool = False
     ENV: str = "development"
 
     # Database

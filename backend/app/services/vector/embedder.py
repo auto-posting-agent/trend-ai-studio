@@ -17,6 +17,11 @@ class VectorEmbedder:
         self.model = "models/text-embedding-004"
         self.dimensions = 768
 
+    @staticmethod
+    def to_vector_literal(values: list[float]) -> str:
+        """Convert embedding floats to pgvector text literal format."""
+        return "[" + ",".join(f"{v:.8f}" for v in values) + "]"
+
     async def embed_text(self, content: str) -> list[float]:
         """Generate embedding for a single text using Gemini."""
         result = genai.embed_content(
@@ -46,16 +51,16 @@ class VectorEmbedder:
 
         query = text("""
             INSERT INTO content_embeddings (content_id, embedding, metadata)
-            VALUES (:content_id, :embedding, :metadata)
+            VALUES (:content_id, CAST(:embedding AS vector), :metadata)
             ON CONFLICT (content_id)
-            DO UPDATE SET embedding = :embedding, metadata = :metadata
+            DO UPDATE SET embedding = CAST(:embedding AS vector), metadata = :metadata
         """)
 
         await self.session.execute(
             query,
             {
                 "content_id": content_id,
-                "embedding": embedding,
+                "embedding": self.to_vector_literal(embedding),
                 "metadata": metadata or {},
             },
         )
@@ -71,17 +76,17 @@ class VectorEmbedder:
         query_embedding = await self.embed_query(query)
 
         sql = text("""
-            SELECT content_id, metadata, 1 - (embedding <=> :embedding) as similarity
+            SELECT content_id, metadata, 1 - (embedding <=> CAST(:embedding AS vector)) as similarity
             FROM content_embeddings
-            WHERE 1 - (embedding <=> :embedding) > :threshold
-            ORDER BY embedding <=> :embedding
+            WHERE 1 - (embedding <=> CAST(:embedding AS vector)) > :threshold
+            ORDER BY embedding <=> CAST(:embedding AS vector)
             LIMIT :limit
         """)
 
         result = await self.session.execute(
             sql,
             {
-                "embedding": query_embedding,
+                "embedding": self.to_vector_literal(query_embedding),
                 "threshold": threshold,
                 "limit": limit,
             },

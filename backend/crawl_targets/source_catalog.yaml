@@ -1,0 +1,418 @@
+version: 2
+
+defaults:
+  http:
+    timeout_sec: 25
+    retries: 2
+    user_agent: "TrendAIStudioBot/0.1 (contact: trendaistudio24@gmail.com)"
+    # In this environment trust_env=True can fail due proxy settings.
+    trust_env: false
+
+sources:
+  # Core seeds: official announcements and high-signal feeds
+  - id: openai_news_rss
+    type: rss
+    name: "OpenAI News (RSS)"
+    url: "https://openai.com/news/rss.xml"
+    allow_prefixes:
+      - "https://openai.com/index/"
+      - "https://openai.com/news/"
+    limit: 30
+
+  - id: openai_dev_changelog_rss
+    type: rss
+    name: "OpenAI Developer Changelog (RSS)"
+    url: "https://developers.openai.com/changelog/rss.xml"
+    allow_prefixes:
+      - "https://developers.openai.com/changelog/"
+    limit: 30
+
+  - id: anthropic_news_index
+    type: html_index
+    name: "Anthropic Newsroom (index)"
+    url: "https://www.anthropic.com/news"
+    allow_prefixes:
+      - "https://www.anthropic.com/news/"
+    limit: 30
+
+  - id: anthropic_release_notes_index
+    type: html_index
+    name: "Claude Platform Release Notes (index)"
+    url: "https://platform.claude.com/docs/en/release-notes/overview"
+    allow_prefixes:
+      - "https://platform.claude.com/docs/en/release-notes/"
+    limit: 30
+
+  # Google: multiple section RSS feeds
+  - id: google_innovation_ai_rss
+    type: rss
+    name: "Google Blog - Innovation & AI (RSS)"
+    url: "https://blog.google/innovation-and-ai/rss/"
+    allow_prefixes:
+      - "https://blog.google/innovation-and-ai/"
+    limit: 30
+
+  - id: google_models_research_rss
+    type: rss
+    name: "Google Blog - Models & Research (RSS)"
+    url: "https://blog.google/innovation-and-ai/models-and-research/rss/"
+    allow_prefixes:
+      - "https://blog.google/innovation-and-ai/models-and-research/"
+    limit: 30
+
+  - id: google_gemini_models_rss
+    type: rss
+    name: "Google Blog - Gemini Models (RSS)"
+    url: "https://blog.google/innovation-and-ai/models-and-research/gemini-models/rss/"
+    allow_prefixes:
+      - "https://blog.google/innovation-and-ai/models-and-research/gemini-models/"
+    limit: 30
+
+  - id: google_ai_category_rss
+    type: rss
+    name: "Google Blog - AI category (RSS)"
+    url: "https://blog.google/innovation-and-ai/technology/ai/rss/"
+    allow_prefixes:
+      - "https://blog.google/innovation-and-ai/"
+    limit: 30
+
+  - id: research_google_blog_rss
+    type: rss
+    name: "Google Research Blog (RSS)"
+    url: "https://research.google/blog/rss/"
+    allow_prefixes:
+      - "https://research.google/blog/"
+    limit: 30
+
+  - id: deepmind_news_rss
+    type: rss
+    name: "Google DeepMind News (RSS)"
+    url: "https://deepmind.google/blog/rss.xml"
+    allow_prefixes:
+      - "https://deepmind.google/blog/"
+    limit: 30
+
+  # Ecosystem feeds
+  - id: huggingface_blog_rss
+    type: rss
+    name: "Hugging Face Blog (RSS)"
+    url: "https://huggingface.co/blog/feed.xml"
+    allow_prefixes:
+      - "https://huggingface.co/blog/"
+    limit: 30
+
+  - id: ollama_blog_rss
+    type: rss
+    name: "Ollama Blog (RSS)"
+    url: "https://ollama.com/blog/rss.xml"
+    allow_prefixes:
+      - "https://ollama.com/blog/"
+    limit: 30
+
+  - id: nvidia_technical_blog_atom
+    type: atom
+    name: "NVIDIA Technical Blog (Atom)"
+    url: "https://developer.nvidia.com/blog/feed/"
+    allow_prefixes:
+      - "https://developer.nvidia.com/blog/"
+    limit: 30
+
+  - id: nvidia_news_releases_rss
+    type: rss
+    name: "NVIDIA Newsroom Releases (RSS)"
+    url: "https://nvidianews.nvidia.com/releases.xml"
+    allow_prefixes:
+      - "https://nvidianews.nvidia.com/news/"
+      - "http://nvidianews.nvidia.com/news/"
+      - "https://blogs.nvidia.com/blog/"
+      - "http://blogs.nvidia.com/blog/"
+    limit: 30
+
+  - id: nvidia_models_frameworks_rss
+    type: rss
+    name: "NVIDIA Newsroom Models/Frameworks (RSS)"
+    url: "https://nvidianews.nvidia.com/cats/models_libraries_frameworks.xml"
+    allow_prefixes:
+      - "https://nvidianews.nvidia.com/news/"
+      - "http://nvidianews.nvidia.com/news/"
+      - "https://blogs.nvidia.com/blog/"
+      - "http://blogs.nvidia.com/blog/"
+    limit: 30
+
+  # GitHub releases (stable Atom feeds)
+  - id: gh_llamacpp_releases_atom
+    type: atom
+    name: "GitHub Releases - llama.cpp"
+    url: "https://github.com/ggml-org/llama.cpp/releases.atom"
+    allow_prefixes:
+      - "https://github.com/ggml-org/llama.cpp/releases/tag/"
+    limit: 30
+
+  - id: gh_vllm_releases_atom
+    type: atom
+    name: "GitHub Releases - vLLM"
+    url: "https://github.com/vllm-project/vllm/releases.atom"
+    allow_prefixes:
+      - "https://github.com/vllm-project/vllm/releases/tag/"
+    limit: 30
+
+  - id: gh_openwebui_releases_atom
+    type: atom
+    name: "GitHub Releases - Open WebUI"
+    url: "https://github.com/open-webui/open-webui/releases.atom"
+    allow_prefixes:
+      - "https://github.com/open-webui/open-webui/releases/tag/"
+    limit: 30
+
+  - id: gh_langgraph_releases_atom
+    type: atom
+    name: "GitHub Releases - LangGraph"
+    url: "https://github.com/langchain-ai/langgraph/releases.atom"
+    allow_prefixes:
+      - "https://github.com/langchain-ai/langgraph/releases/tag/"
+    limit: 30
+
+  # Papers
+  - id: arxiv_cs_ai_rss
+    type: rss
+    name: "arXiv cs.AI (RSS)"
+    url: "https://rss.arxiv.org/rss/cs.AI"
+    limit: 50
+
+  - id: arxiv_cs_cl_rss
+    type: rss
+    name: "arXiv cs.CL (RSS)"
+    url: "https://rss.arxiv.org/rss/cs.CL"
+    limit: 50
+
+  - id: arxiv_cs_lg_rss
+    type: rss
+    name: "arXiv cs.LG (RSS)"
+    url: "https://rss.arxiv.org/rss/cs.LG"
+    limit: 50
+
+  - id: arxiv_cs_cv_rss
+    type: rss
+    name: "arXiv cs.CV (RSS)"
+    url: "https://rss.arxiv.org/rss/cs.CV"
+    limit: 50
+
+  - id: arxiv_stat_ml_rss
+    type: rss
+    name: "arXiv stat.ML (RSS)"
+    url: "https://rss.arxiv.org/rss/stat.ML"
+    limit: 50
+
+  # Community and media
+  - id: hn_frontpage_rss
+    type: rss
+    name: "Hacker News Frontpage (RSS)"
+    url: "https://news.ycombinator.com/rss"
+    limit: 30
+
+  - id: hnrss_ai_newest
+    type: rss
+    name: "HN keyword AI (RSS)"
+    url: "https://hnrss.org/newest?q=AI"
+    limit: 30
+
+  - id: techcrunch_ai_rss
+    type: rss
+    name: "TechCrunch AI category (RSS)"
+    url: "https://techcrunch.com/category/artificial-intelligence/feed/"
+    allow_prefixes:
+      - "https://techcrunch.com/"
+    limit: 30
+
+  - id: verge_ai_rss
+    type: rss
+    name: "The Verge AI category (RSS)"
+    url: "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml"
+    allow_prefixes:
+      - "https://www.theverge.com/"
+    limit: 30
+
+  - id: geeknews_rss
+    type: rss
+    name: "GeekNews (RSS)"
+    url: "https://news.hada.io/rss/news"
+    limit: 50
+
+  - id: aitimes_all_rss
+    type: rss
+    name: "AI Times (RSS all)"
+    url: "https://cdn.aitimes.com/rss/gn_rss_allArticle.xml"
+    limit: 50
+
+  # Optional sources: useful but currently noisy or blocked in this environment.
+  - id: ai_meta_blog_index
+    enabled: false
+    type: html_index
+    name: "Meta AI Blog (index)"
+    url: "https://ai.meta.com/blog/"
+    allow_prefixes:
+      - "https://ai.meta.com/blog/"
+    limit: 30
+
+  - id: mistral_news_index
+    enabled: false
+    type: html_index
+    name: "Mistral News (index)"
+    url: "https://mistral.ai/news"
+    allow_prefixes:
+      - "https://mistral.ai/news/"
+    limit: 30
+
+  - id: qwen_blog_index
+    enabled: false
+    type: html_index
+    name: "Qwen Blog (index)"
+    url: "https://qwen.ai/blog/"
+    allow_prefixes:
+      - "https://qwen.ai/blog/"
+    limit: 30
+
+  - id: minimax_news_index
+    enabled: false
+    type: html_index
+    name: "MiniMax News (index)"
+    url: "https://www.minimax.io/news"
+    allow_prefixes:
+      - "https://www.minimax.io/news"
+    limit: 30
+
+  - id: kimi_blog_index
+    enabled: false
+    type: html_index
+    name: "Kimi Blog (index)"
+    url: "https://www.kimi.com/blog/"
+    allow_prefixes:
+      - "https://www.kimi.com/blog/"
+    limit: 30
+
+  - id: hf_models_modified_index
+    enabled: false
+    type: html_index
+    name: "Hugging Face Models modified (index)"
+    url: "https://huggingface.co/models?sort=modified"
+    allow_prefixes:
+      - "https://huggingface.co/"
+    allow_regexes:
+      - "^https://huggingface\\.co/[^/?#]+/[^/?#]+$"
+    deny_regexes:
+      - "/datasets/"
+      - "/spaces/"
+      - "/docs/"
+      - "/blog/"
+      - "/papers/"
+    limit: 50
+
+  - id: hf_papers_trending_index
+    enabled: false
+    type: html_index
+    name: "Hugging Face Papers trending (index)"
+    url: "https://huggingface.co/papers/trending"
+    allow_prefixes:
+      - "https://huggingface.co/papers/"
+    deny_regexes:
+      - "^https://huggingface\\.co/papers/?$"
+      - "^https://huggingface\\.co/papers/trending/?$"
+    limit: 50
+
+  - id: github_trending_index
+    enabled: false
+    type: html_index
+    name: "GitHub Trending (index)"
+    url: "https://github.com/trending"
+    allow_prefixes:
+      - "https://github.com/"
+    allow_regexes:
+      - "^https://github\\.com/[^/?#]+/[^/?#]+$"
+    deny_regexes:
+      - "/topics/"
+      - "/collections/"
+      - "/sponsors/"
+      - "/login"
+      - "/features/"
+    limit: 50
+
+  - id: openai_news_index
+    enabled: false
+    type: html_index
+    name: "OpenAI News (index, blocked in this env)"
+    url: "https://openai.com/news/"
+    allow_prefixes:
+      - "https://openai.com/news/"
+    limit: 30
+
+  - id: openai_help_model_release_notes
+    enabled: false
+    type: html_index
+    name: "OpenAI Help model release notes (index, blocked in this env)"
+    url: "https://help.openai.com/en/articles/9624314-model-release-notes"
+    allow_prefixes:
+      - "https://help.openai.com/"
+    limit: 30
+
+  - id: xai_news_index
+    enabled: false
+    type: html_index
+    name: "xAI News (index, blocked in this env)"
+    url: "https://x.ai/news"
+    allow_prefixes:
+      - "https://x.ai/news"
+    limit: 30
+
+  - id: perplexity_changelog_index
+    enabled: false
+    type: html_index
+    name: "Perplexity Changelog (index, blocked in this env)"
+    url: "https://www.perplexity.ai/changelog"
+    allow_prefixes:
+      - "https://www.perplexity.ai/"
+    limit: 30
+
+  - id: perplexity_hub_index
+    enabled: false
+    type: html_index
+    name: "Perplexity Hub (index, blocked in this env)"
+    url: "https://www.perplexity.ai/hub"
+    allow_prefixes:
+      - "https://www.perplexity.ai/"
+    limit: 30
+
+  - id: venturebeat_ai_index
+    enabled: false
+    type: html_index
+    name: "VentureBeat AI (index, rate-limited in this env)"
+    url: "https://venturebeat.com/category/ai"
+    allow_prefixes:
+      - "https://venturebeat.com/"
+    limit: 30
+
+  - id: itworld_ai_index
+    enabled: false
+    type: html_index
+    name: "ITWorld AI (index)"
+    url: "https://www.itworld.co.kr/artificial-intelligence/"
+    allow_prefixes:
+      - "https://www.itworld.co.kr/"
+    limit: 30
+
+  - id: zdnet_kr_index
+    enabled: false
+    type: html_index
+    name: "ZDNet Korea (index)"
+    url: "https://zdnet.co.kr/"
+    allow_prefixes:
+      - "https://zdnet.co.kr/"
+    limit: 30
+
+  - id: etnews_rss_directory_index
+    enabled: false
+    type: html_index
+    name: "ETNews RSS directory (index)"
+    url: "https://www.etnews.com/rss/"
+    allow_prefixes:
+      - "https://www.etnews.com/"
+    limit: 30

@@ -29,6 +29,6 @@ class Thread(SQLModel, table=True):
     scheduled_at: datetime | None = Field(default=None)
     published_at: datetime | None = Field(default=None)
     threads_post_id: str | None = Field(default=None)
-    metadata: dict[str, Any] = Field(default={}, sa_column=Column(JSON))
+    extra_data: dict[str, Any] = Field(default={}, sa_column=Column(JSON))
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)

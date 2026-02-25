@@ -61,7 +61,7 @@ class CrawledContent(SQLModel, table=True):
     image_urls: list[str] = Field(default=[], sa_column=Column(JSON))
     source_url: str = Field(unique=True)
     published_at: datetime
-    metadata: dict[str, Any] = Field(default={}, sa_column=Column(JSON))
+    extra_data: dict[str, Any] = Field(default={}, sa_column=Column(JSON))
     category_hint: CategoryHint = Field(default=CategoryHint.GENERAL)
     thread_status: ThreadStatus = Field(default=ThreadStatus.PENDING)
     created_at: datetime = Field(default_factory=datetime.utcnow)

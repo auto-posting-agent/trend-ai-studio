@@ -23,10 +23,28 @@
 
 RSS, 웹사이트에서 AI/주식 관련 트렌드를 자동으로 수집하고, LLM으로 분석/요약하여 Threads에 자동 게시하는 시스템
 
+## 빠른 시작
+
+```bash
+# 1. 저장소 클론
+git clone <repository-url>
+cd trend-ai-studio
+
+# 2. 환경변수 설정
+cd backend && nano .env  # .env 파일 생성
+
+# 3. Docker로 실행
+cd .. && docker-compose up --build
+```
+
+- Frontend: http://localhost:3001
+- Backend API: http://localhost:8001/docs
+
 ## 문서
 
 | 문서 | 설명 |
 |------|------|
+| [Docker 가이드](docs/DOCKER_SETUP.md) | Docker 개발 환경 세팅 |
 | [설치 가이드](docs/SETUP.md) | 환경 설정 및 실행 방법 |
 | [기능 명세](docs/FEATURE_SPEC.md) | 시스템 기능 상세 |
 | [개발 명세](docs/DEV_SPEC.md) | 기술 스택 및 API 명세 |

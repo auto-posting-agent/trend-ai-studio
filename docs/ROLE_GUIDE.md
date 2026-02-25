@@ -1,6 +1,56 @@
 # 역할 분담 가이드
 
-> 최종 수정: 2026-02-21
+> 최종 수정: 2026-02-25
+
+## 개발 환경 세팅 (Docker)
+
+### 필요 사항
+- Docker Desktop 설치
+- `.env` 파일 (팀원과 공유)
+
+### 초기 세팅
+```bash
+# 1. 저장소 클론
+git clone <repo-url>
+cd trend-ai-studio
+
+# 2. .env 파일 생성
+cd backend
+# .env 파일 생성하고 공유받은 내용 붙여넣기
+
+# 3. Docker 빌드 및 실행
+cd ..
+docker-compose up --build
+```
+
+### 일상 작업
+```bash
+# 컨테이너 시작
+docker-compose up
+
+# 백그라운드 실행
+docker-compose up -d
+
+# 로그 확인
+docker-compose logs -f backend
+
+# 컨테이너 중지
+docker-compose down
+
+# 컨테이너 내부 접속
+docker exec -it trend-ai-backend bash
+
+# 마이그레이션 실행
+docker exec -it trend-ai-backend alembic upgrade head
+```
+
+### 크롤러 단독 테스트
+```bash
+# Docker 컨테이너 내에서
+docker exec -it trend-ai-backend python -m app.services.crawler.rss
+```
+
+---
 
 ## 브랜치 전략
 

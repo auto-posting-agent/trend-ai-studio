@@ -1,9 +1,18 @@
 from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel, HttpUrl
 from typing import List
 
 from app.schemas.source import SourceCreate, SourceResponse, CrawledContent
+from app.services.crawler.google_blog_ingest import crawl_and_upsert_google_blog_article
 
 router = APIRouter()
+
+
+class GoogleBlogCrawlRequest(BaseModel):
+    url: HttpUrl
+    dry_run: bool = False
+    html: str | None = None
+    trust_env: bool = False
 
 
 @router.get("/", response_model=List[SourceResponse])
@@ -32,6 +41,22 @@ async def delete_source(source_id: str):
     """Delete a source."""
     # TODO: Implement with Supabase
     raise HTTPException(status_code=501, detail="Not implemented")
+
+
+@router.post("/crawl/google-blog")
+async def crawl_google_blog_once(req: GoogleBlogCrawlRequest):
+    """Crawl one Google Blog article and optionally persist it."""
+    try:
+        return await crawl_and_upsert_google_blog_article(
+            str(req.url),
+            dry_run=req.dry_run,
+            html=req.html,
+            trust_env=req.trust_env,
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Crawl failed: {e}") from e
 
 
 @router.post("/{source_id}/crawl", response_model=List[CrawledContent])

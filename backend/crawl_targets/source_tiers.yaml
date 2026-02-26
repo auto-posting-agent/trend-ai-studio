@@ -1,0 +1,33 @@
+version: 1
+default_tier: 2
+
+# Tier 1 = official model/product release sources.
+host_tiers:
+  openai.com: 1
+  developers.openai.com: 1
+  anthropic.com: 1
+  platform.claude.com: 1
+  blog.google: 1
+  deepmind.google: 1
+  research.google: 1
+  ai.meta.com: 1
+  x.ai: 1
+  mistral.ai: 1
+  qwen.ai: 1
+  minimax.io: 1
+  kimi.com: 1
+  ollama.com: 1
+  huggingface.co: 1
+  developer.nvidia.com: 1
+  nvidianews.nvidia.com: 1
+  blogs.nvidia.com: 1
+
+# Fallback when URL host is missing or ambiguous.
+source_name_tiers:
+  openai: 1
+  anthropic: 1
+  claude: 1
+  google: 1
+  deepmind: 1
+  gemini: 1
+  nvidia: 1

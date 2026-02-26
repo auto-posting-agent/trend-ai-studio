@@ -79,6 +79,31 @@ class CrawledContent(SQLModel, table=True):
     title: str
     content: str
 
+    # Content summary
+    summary_hint: str | None = Field(default=None)
+
+    # Content structure
+    image_urls: list[str] = Field(default_factory=list, sa_column=Column(JSON))
+    image_positions: list[dict[str, Any]] = Field(default_factory=list, sa_column=Column(JSON))
+    outbound_urls: list[str] = Field(default_factory=list, sa_column=Column(JSON))
+
+    # URLs and timestamps
+    source_url: str = Field(unique=True)
+    published_at: datetime
+
+    # Raw data preservation
+    raw_payload: dict[str, Any] = Field(default_factory=dict, sa_column=Column(JSON))
+    extra_data: dict[str, Any] = Field(default_factory=dict, sa_column=Column(JSON))
+
+    # Classification
+    content_type: ContentType = Field(default=ContentType.GENERAL)
+    category_hint: CategoryHint = Field(default=CategoryHint.GENERAL)
+    tags: list[str] = Field(default_factory=list, sa_column=Column(JSON))
+    language: str = Field(default="en")
+
+    # Status tracking
+    thread_status: ThreadStatus = Field(default=ThreadStatus.PENDING)
+
     # Duplicate detection
     content_hash: str | None = Field(default=None, index=True)
 
@@ -89,30 +114,6 @@ class CrawledContent(SQLModel, table=True):
     fetched_at: datetime = Field(default_factory=datetime.utcnow)
     author: str | None = Field(default=None)
 
-    # Content summary
-    summary_hint: str | None = Field(default=None)
-
-    # Content structure
-    image_urls: list[str] = Field(default=[], sa_column=Column(JSON))
-    image_positions: list[dict[str, Any]] = Field(default=[], sa_column=Column(JSON))
-    outbound_urls: list[str] = Field(default=[], sa_column=Column(JSON))
-
-    # Classification
-    content_type: ContentType = Field(default=ContentType.GENERAL)
-    category_hint: CategoryHint = Field(default=CategoryHint.GENERAL)
-    tags: list[str] = Field(default=[], sa_column=Column(JSON))
-    language: str = Field(default="en")
-
-    # URLs and timestamps
-    source_url: str = Field(unique=True)
-    published_at: datetime
-
-    # Raw data preservation
-    raw_payload: dict[str, Any] = Field(default={}, sa_column=Column(JSON))
-    extra_data: dict[str, Any] = Field(default={}, sa_column=Column(JSON))
-
-    # Status tracking
-    thread_status: ThreadStatus = Field(default=ThreadStatus.PENDING)
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
@@ -126,13 +127,13 @@ class GeneratedPost(SQLModel, table=True):
     content_id: str = Field(foreign_key="crawled_contents.id", index=True)
 
     # Generated content
-    thread_parts: list[str] = Field(default=[], sa_column=Column(JSON))
+    thread_parts: list[str] = Field(default_factory=list, sa_column=Column(JSON))
     generated_post: str
     analysis_summary: str | None = Field(default=None)
     web_search_results: str | None = Field(default=None)
 
     # Metadata
-    hashtags: list[str] = Field(default=[], sa_column=Column(JSON))
+    hashtags: list[str] = Field(default_factory=list, sa_column=Column(JSON))
     link: str | None = Field(default=None)
 
     # Status

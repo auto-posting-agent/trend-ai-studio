@@ -5,7 +5,7 @@ services:
     image: redis:7-alpine
     container_name: trend-ai-redis
     ports:
-      - "6379:6379"
+      - "6380:6379"
     volumes:
       - redis-data:/data
     restart: unless-stopped
@@ -17,7 +17,7 @@ services:
       dockerfile: Dockerfile
     container_name: trend-ai-backend
     ports:
-      - "8001:8000"
+      - "8001:8001"
     volumes:
       - ./backend:/app
       - backend-venv:/app/venv
@@ -29,7 +29,7 @@ services:
     restart: unless-stopped
     depends_on:
       - redis
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8001 --reload
 
   frontend:
     build:
@@ -37,7 +37,7 @@ services:
       dockerfile: Dockerfile
     container_name: trend-ai-frontend
     ports:
-      - "3001:3000"
+      - "3001:3001"
     volumes:
       - ./frontend:/app
       - /app/node_modules
@@ -45,6 +45,7 @@ services:
     environment:
       - NODE_ENV=development
       - NEXT_PUBLIC_API_URL=http://localhost:8001
+      - PORT=3001
     restart: unless-stopped
     depends_on:
       - backend

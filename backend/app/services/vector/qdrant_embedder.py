@@ -1,6 +1,7 @@
 from google import genai
+from qdrant_client import QdrantClient, models
+from qdrant_client.models import Distance, VectorParams, PointStruct
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import text
 
 from app.config import get_settings
 
@@ -9,14 +10,38 @@ settings = get_settings()
 # Initialize Gemini client
 client = genai.Client(api_key=settings.GEMINI_API_KEY)
 
+# Initialize Qdrant client
+qdrant_client = QdrantClient(
+    url=settings.QDRANT_URL,
+    api_key=settings.QDRANT_API_KEY,
+)
 
-class VectorEmbedder:
-    """Handle vector embeddings and similarity search with Gemini + pgvector."""
+COLLECTION_NAME = "content_embeddings"
+
+
+class QdrantEmbedder:
+    """Handle vector embeddings and similarity search with Gemini + Qdrant."""
 
     def __init__(self, session: AsyncSession):
         self.session = session
         self.model = "models/gemini-embedding-001"
-        self.dimensions = 3072  # gemini-embedding-001 uses 3072 dimensions
+        self.dimensions = 3072
+        self.client = qdrant_client
+        self._ensure_collection()
+
+    def _ensure_collection(self):
+        """Create collection if it doesn't exist."""
+        collections = self.client.get_collections().collections
+        collection_names = [c.name for c in collections]
+
+        if COLLECTION_NAME not in collection_names:
+            self.client.create_collection(
+                collection_name=COLLECTION_NAME,
+                vectors_config=VectorParams(
+                    size=self.dimensions,
+                    distance=Distance.COSINE
+                )
+            )
 
     async def embed_text(self, content: str) -> list[float]:
         """Generate embedding for a single text using Gemini."""
@@ -40,25 +65,20 @@ class VectorEmbedder:
         content: str,
         metadata: dict | None = None,
     ) -> None:
-        """Embed text and store in pgvector."""
+        """Embed text and store in Qdrant."""
         embedding = await self.embed_text(content)
 
-        query = text("""
-            INSERT INTO content_embeddings (content_id, embedding, extra_data)
-            VALUES (:content_id, :embedding, :extra_data)
-            ON CONFLICT (content_id)
-            DO UPDATE SET embedding = :embedding, extra_data = :extra_data
-        """)
-
-        await self.session.execute(
-            query,
-            {
-                "content_id": content_id,
-                "embedding": embedding,
-                "extra_data": metadata or {},
-            },
+        # Store in Qdrant
+        self.client.upsert(
+            collection_name=COLLECTION_NAME,
+            points=[
+                PointStruct(
+                    id=content_id,
+                    vector=embedding,
+                    payload=metadata or {}
+                )
+            ]
         )
-        await self.session.commit()
 
     async def search_similar(
         self,
@@ -69,44 +89,49 @@ class VectorEmbedder:
         """Search for similar content using vector similarity."""
         query_embedding = await self.embed_query(query)
 
-        sql = text("""
-            SELECT content_id, extra_data, 1 - (embedding <=> :embedding) as similarity
-            FROM content_embeddings
-            WHERE 1 - (embedding <=> :embedding) > :threshold
-            ORDER BY embedding <=> :embedding
-            LIMIT :limit
-        """)
-
-        result = await self.session.execute(
-            sql,
-            {
-                "embedding": query_embedding,
-                "threshold": threshold,
-                "limit": limit,
-            },
+        # Search in Qdrant
+        results = self.client.query_points(
+            collection_name=COLLECTION_NAME,
+            query=query_embedding,
+            limit=limit,
+            score_threshold=threshold
         )
 
         return [
-            {"content_id": row[0], "metadata": row[1], "similarity": row[2]}
-            for row in result.fetchall()
+            {
+                "content_id": hit.id,
+                "metadata": hit.payload,
+                "similarity": hit.score
+            }
+            for hit in results.points
         ]
 
     async def check_duplicate(
         self,
         content: str,
-        threshold: float = 0.9
+        threshold: float = 0.9,
+        exclude_id: str | None = None
     ) -> tuple[bool, str | None]:
         """
         Check if content is duplicate via vector similarity.
+
+        Args:
+            content: Content text to check
+            threshold: Similarity threshold (0-1)
+            exclude_id: Content ID to exclude from results (e.g., current content)
 
         Returns:
             tuple: (is_duplicate, existing_content_id)
         """
         similar = await self.search_similar(
             query=content,
-            limit=1,
+            limit=5,  # Get more results to filter
             threshold=threshold
         )
+
+        # Filter out the excluded ID
+        if exclude_id:
+            similar = [s for s in similar if s["content_id"] != exclude_id]
 
         if similar:
             return (True, similar[0]["content_id"])
@@ -188,3 +213,12 @@ class VectorEmbedder:
             return embedding
         finally:
             await redis_client.aclose()
+
+    def delete_embedding(self, content_id: str):
+        """Delete embedding from Qdrant."""
+        self.client.delete(
+            collection_name=COLLECTION_NAME,
+            points_selector=models.PointIdsList(
+                points=[content_id]
+            )
+        )

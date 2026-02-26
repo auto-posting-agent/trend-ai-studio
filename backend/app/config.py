@@ -33,6 +33,10 @@ class Settings(BaseSettings):
     # Redis
     REDIS_URL: str = "redis://localhost:6379"
 
+    # Qdrant Vector DB
+    QDRANT_URL: str = "http://localhost:6333"  # Default local, or cloud URL
+    QDRANT_API_KEY: str = ""  # For Qdrant Cloud
+
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"

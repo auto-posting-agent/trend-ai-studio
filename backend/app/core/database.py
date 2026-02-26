@@ -8,7 +8,7 @@ settings = get_settings()
 
 engine = create_async_engine(
     settings.DATABASE_URL,
-    echo=settings.DEBUG,
+    echo=False,  # SQL 쿼리 로그 완전히 끄기
     future=True,
 )
 
